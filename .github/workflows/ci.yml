@@ -11,7 +11,11 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y autoconf automake libtool g++ lcov
+          sudo apt-get install -y \
+            autoconf automake libtool g++ lcov \
+            pkg-config \
+            libwpd-dev libwpg-dev libetonyek-dev libcdr-dev libzmf-dev \
+            librevenge-dev libxml2-dev zlib1g-dev
 
       - name: Configure
         run: |
