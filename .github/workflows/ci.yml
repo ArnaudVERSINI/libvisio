@@ -15,7 +15,11 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y autoconf automake libtool g++ make pkg-config librevenge-dev libxml2-dev libicu-dev gperf perl doxygen lcov libboost-all-dev libcppunit-dev gperf
+          sudo apt-get install -y \
+            autoconf automake libtool g++ make pkg-config \
+            librevenge-dev libxml2-dev libicu-dev \
+            libcppunit-dev libboost-all-dev \
+            gperf perl doxygen lcov
 
       - name: Configure
         run: |
@@ -32,8 +36,11 @@ jobs:
           lcov --capture --directory . --ignore-errors mismatch --output-file coverage.info
           genhtml coverage.info --output-directory coverage
 
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./coverage
+
       - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/master'
         uses: actions/deploy-pages@v4
-        with:
-          publish_dir: ./coverage
