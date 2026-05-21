@@ -15,7 +15,7 @@ jobs:
             autoconf automake libtool g++ lcov \
             pkg-config \
             libwpd-dev libwpg-dev libetonyek-dev libcdr-dev libzmf-dev \
-            librevenge-dev libxml2-dev zlib1g-dev libboost-all-dev  
+            librevenge-dev libxml2-dev zlib1g-dev libboost-all-dev cppunit
 
       - name: Configure
         run: |
