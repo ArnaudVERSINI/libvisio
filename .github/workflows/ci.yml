@@ -8,22 +8,14 @@ jobs:
     permissions:
       contents: read
       pages: write
-      id-token: write    
+      id-token: write
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/configure-pages@v4
-      - uses: actions/upload-pages-artifact@v3
-      - with:
-          path: html
-      - uses: actions/deploy-pages@v4
+
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y \
-            autoconf automake libtool g++ lcov \
-            pkg-config \
-            libwpd-dev libwpg-dev libetonyek-dev libcdr-dev libzmf-dev \
-            librevenge-dev libxml2-dev zlib1g-dev libboost-all-dev libcppunit-dev gperf
+          sudo apt-get install -y autoconf automake libtool g++ make pkg-config librevenge-dev libxml2-dev libicu-dev cppunit gperf perl doxygen lcov libboost-all-dev
 
       - name: Configure
         run: |
@@ -38,7 +30,10 @@ jobs:
       - name: Generate coverage report
         run: |
           lcov --capture --directory . --ignore-errors mismatch --output-file coverage.info
-          lcov --remove coverage.info '/usr/*' --output-file coverage.info
           genhtml coverage.info --output-directory coverage
 
-
+      - name: Deploy to GitHub Pages
+        if: github.ref == 'refs/heads/master'
+        uses: actions/deploy-pages@v4
+        with:
+          publish_dir: ./coverage
