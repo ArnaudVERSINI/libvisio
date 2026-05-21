@@ -41,4 +41,4 @@ jobs:
         if: github.ref == 'refs/heads/master'
         uses: actions/deploy-pages@v4
         with:
-          publish_dir: ./coverage
+          path: ./coverage
